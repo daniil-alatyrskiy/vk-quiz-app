@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+const socket = io('http://84.54.59.54:3001');
 
 interface Question {
   id: number;
@@ -89,7 +89,7 @@ function App() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001${url}`, {
+      const res = await fetch(`http://84.54.59.54:3001${url}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -132,7 +132,7 @@ function App() {
 
   const loadQuizzes = async (userId: number) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/quizzes/${userId}`);
+      const res = await fetch(`http://84.54.59.54:3001/api/quizzes/${userId}`);
       const data = await res.json();
       setQuizzes(data);
     } catch (e) {
@@ -142,7 +142,7 @@ function App() {
 
   const loadQuizDetails = async (quizId: number) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/quizzes/detail/${quizId}`);
+      const res = await fetch(`http://84.54.59.54:3001/api/quizzes/detail/${quizId}`);
       const data = await res.json();
       setCurrentQuiz(data);
       setCurrentQuizQuestions(data.questions || []);
@@ -157,7 +157,7 @@ function App() {
   const createQuiz = async () => {
     if (!user) return;
     try {
-      const res = await fetch('http://localhost:3001/api/quizzes', {
+      const res = await fetch('http://84.54.59.54:3001/api/quizzes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -190,7 +190,7 @@ function App() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001/api/quizzes/${currentQuizId}/questions`, {
+      const res = await fetch(`http://84.54.59.54:3001/api/quizzes/${currentQuizId}/questions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -230,7 +230,7 @@ function App() {
   const deleteQuestion = async (questionId: number) => {
     if (!confirm('Удалить этот вопрос?')) return;
     try {
-      await fetch(`http://localhost:3001/api/questions/${questionId}`, { method: 'DELETE' });
+      await fetch(`http://84.54.59.54:3001/api/questions/${questionId}`, { method: 'DELETE' });
       showNotification('Вопрос удалён');
       if (currentQuizId) await loadQuizDetails(currentQuizId);
     } catch (e) {
@@ -240,7 +240,7 @@ function App() {
 
   const startQuiz = async (quizId: number) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/quizzes/${quizId}/start`, {
+      const res = await fetch(`http://84.54.59.54:3001/api/quizzes/${quizId}/start`, {
         method: 'POST'
       });
       const data = await res.json();
@@ -385,7 +385,7 @@ function App() {
     }
     const fakeToken = 'reset_' + Date.now();
     console.log('%c[DEV] Ссылка для сброса пароля:', 'color: #3b82f6; font-weight: bold',
-      `http://localhost:3001/reset-password?token=${fakeToken}&email=${resetEmail}`);
+      `http://84.54.59.54:3001/reset-password?token=${fakeToken}&email=${resetEmail}`);
     showNotification('В development-режиме ссылка отправлена. Проверь консоль браузера (F12)');
     setShowResetModal(false);
     setResetEmail('');
