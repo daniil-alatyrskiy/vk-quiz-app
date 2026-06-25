@@ -43,7 +43,9 @@ services:
     container_name: vk-quiz-client
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "80:5173"
+    environment:
+      - VITE_API_URL=http://84.54.59.54:3001
     depends_on:
       - server
 
