@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: vk-quiz-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: quiz_platform
+      POSTGRES_USER: qats
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme123}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qats -d quiz_platform"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: vk-quiz-server
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./server/.env
+    environment:
+      DATABASE_URL: postgres://qats:${DB_PASSWORD:-changeme123}@db:5432/quiz_platform
+      PORT: 3001
+      NODE_ENV: production
+    ports:
+      - "3001:3001"
+
+volumes:
+  db_data:
