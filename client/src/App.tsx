@@ -834,8 +834,8 @@ function App() {
                     )}
 
                     <div className="grid gap-3">
-                      {currentQuestion.answers?.map((ans: any) => {
-                        const isSelected = selectedAnswerIds.includes(ans.id);
+                        {currentQuestion.answers?.map((ans: any, index: number) => {
+                          const isSelected = selectedAnswerIds.includes(ans.id);
                         return (
                           <button
                             key={ans.id}
