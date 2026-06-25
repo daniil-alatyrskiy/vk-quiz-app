@@ -759,7 +759,7 @@ function App() {
               <div className="bg-white rounded-3xl border p-8">
                 <h3 className="font-semibold mb-4">Вопросы в квизе ({currentQuizQuestions.length})</h3>
                 <div className="space-y-3">
-                  {currentQuizQuestions.map((q, idx) => (
+                  {currentQuizQuestions.map((q, _idx) => (
                     <div key={q.id} className="border rounded-2xl p-5 flex gap-4">
                       <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-xl flex items-center justify-center text-sm font-mono text-gray-500">
                         {idx + 1}
@@ -834,8 +834,8 @@ function App() {
                     )}
 
                     <div className="grid gap-3">
-                        {currentQuestion.answers?.map((ans: any, index: number) => {
-                          const isSelected = selectedAnswerIds.includes(ans.id);
+                      {currentQuestion.answers?.map((ans: any, _index: number) => {
+                        const isSelected = selectedAnswerIds.includes(ans.id);
                         return (
                           <button
                             key={ans.id}
